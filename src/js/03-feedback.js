@@ -30,14 +30,15 @@ function onInputForm() {
 
 function onSubmitForm(evt) {
   evt.preventDefault();
+
+  if (feedbackFormEmail.value === '' || feedbackFormMessage.value === '') {
+    alert('Для відправки, усі поля повинні бути заповненні');
+    return;
+  }
   console.log({
     email: feedbackFormEmail.value,
     message: feedbackFormMessage.value,
   });
-
-  if (feedbackFormEmail.value === '' || feedbackFormMessage.value === '') {
-    return alert('Для відправки, усі поля повинні бути заповненні');
-  }
   localStorage.removeItem(LOCALSTORAGE_KEY);
   evt.currentTarget.reset();
   localStorageData = {};
