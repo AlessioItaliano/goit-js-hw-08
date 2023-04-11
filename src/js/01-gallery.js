@@ -5,8 +5,6 @@ import SimpleLightbox from 'simplelightbox';
 
 import 'simplelightbox/dist/simple-lightbox.min.css';
 
-// console.log(galleryItems);
-
 const galleryList = document.querySelector('.gallery');
 
 const galleryItemMarkup = galleryItems
@@ -22,18 +20,8 @@ const galleryItemMarkup = galleryItems
 
 galleryList.insertAdjacentHTML('afterbegin', galleryItemMarkup);
 
-galleryList.addEventListener('click', onClick);
-
-function onClick(evt) {
-  evt.preventDefault();
-  if (evt.target.nodeName !== 'IMG') {
-    return;
-  } else {
-    let gallery = new SimpleLightbox('.gallery__link', {
-      captionsData: 'alt',
-      captionPosition: 'bottom',
-      captionDelay: 250,
-    });
-    gallery.on('show.simplelightbox', function () {});
-  }
-}
+const lightbox = new SimpleLightbox('.gallery a', {
+  captionsData: 'alt',
+  captionPosition: 'bottom',
+  captionDelay: 250,
+});
