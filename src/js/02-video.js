@@ -5,13 +5,24 @@ const LOCALSTORAGE_KEY = 'videoplayer-current-time';
 const iframe = document.querySelector('iframe');
 const player = new Player(iframe);
 
-player.on(
-  'timeupdate',
-  throttle(function (data) {
-    localStorage.setItem(LOCALSTORAGE_KEY, data.seconds);
-  }, 1000)
-);
+const getCurrentTime = function (data) {
+  const seconds = data.seconds;
+  localStorage.setItem(LOCALSTORAGE_KEY, JSON.stringify(seconds));
+};
 
-player.setCurrentTime(
-  JSON.parse(localStorage.getItem(LOCALSTORAGE_KEY)).then(function (seconds) {})
-);
+player.on('timeupdate', throttle(getCurrentTime, 1000));
+
+player
+  .setCurrentTime(JSON.parse(localStorage.getItem(LOCALSTORAGE_KEY)))
+  .then(function (seconds) {})
+  .catch(function (error) {
+    switch (error.name) {
+      case 'RangeError':
+        // the time was less than 0 or greater than the video’s duration
+        break;
+
+      default:
+        // some other error occurred
+        break;
+    }
+  });
