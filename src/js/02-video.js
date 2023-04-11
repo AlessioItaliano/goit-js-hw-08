@@ -12,6 +12,6 @@ player.on(
   }, 1000)
 );
 
-player
-  .setCurrentTime(JSON.parse(localStorage.getItem(LOCALSTORAGE_KEY)))
-  .then(function (seconds) {});
+player.setCurrentTime(
+  JSON.parse(localStorage.getItem(LOCALSTORAGE_KEY)).then(function (seconds) {})
+);
